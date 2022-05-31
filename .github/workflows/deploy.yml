@@ -22,7 +22,11 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.SSH_HOST_IP }}  >> ~/.ssh/known_hosts
 
       - name: SSH other
-        run: echo ls -a #rsync -avz -e "ssh -p ${{ secrets.SSH_PORT }}" ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/zellwk.com/
+        run: | 
+          cd /home/mdeleon/
+          cd ..
+          ls
+          echo ls -a # rsync -avz -e "ssh -p ${{ secrets.SSH_PORT }}" ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/zellwk.com/
 
       - name: SSH conection
         uses: appleboy/ssh-action@master
