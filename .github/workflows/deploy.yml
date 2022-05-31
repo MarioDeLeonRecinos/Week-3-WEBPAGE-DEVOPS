@@ -18,6 +18,18 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: unnecessary
 
+      - name: Update theme
+        # (Optional)If you have the theme added as submodule, you can pull it and use the most updated version
+        run: git submodule update --init --recursive
+
+      - name: Hugo setup
+        uses: peaceiris/actions-hugo@v2.4.13
+        with:
+          hugo-version: "0.99.1"
+
+      - name: Build
+        run: hugo -D
+
       - name: Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.SSH_HOST_IP }}  >> ~/.ssh/known_hosts
 
@@ -28,7 +40,9 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/mdeleon/Week-3-WEBPAGE-DEVOPS
-            git pull origin main
-            echo $USER #rm -r public/
-            hugo -D
+            cd /home/mdeleon/
+            rm -r public/
+            mkdir public
+
+      - name: Deploy with rsync
+        run: rsync -avz ./public/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST_IP }}:/home/mdeleon/public
