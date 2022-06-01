@@ -40,10 +40,7 @@ jobs:
         with:
           directory: "./public"
           # The directory to scan
-          arguments: |
-          --allow-missing-href
-          --disable_external
-          --ignore_missing_alt
+          arguments: --allow-missing-href --disable_external --ignore_missing_alt 
 
       - name: Rsync Deployments Action
         uses: Burnett01/rsync-deployments@5.2
