@@ -40,7 +40,10 @@ jobs:
         with:
           directory: "./public"
           # The directory to scan
-          arguments: --allow-missing-href
+          arguments: |
+          --allow-missing-href
+          --disable_external
+          --ignore_missing_alt
           # The arguments to pass to HTMLProofer
 
 
